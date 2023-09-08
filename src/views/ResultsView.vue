@@ -11,6 +11,8 @@ import ResultForm from '@/components/ResultForm.vue'
         </template>
         <hr>
         <template #body>
+            <result-form>
+            </result-form>
         </template>
     </form-block>
 </template>
