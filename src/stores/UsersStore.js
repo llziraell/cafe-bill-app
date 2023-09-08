@@ -68,5 +68,91 @@ export const useUserStore = defineStore("user", {
                 item.users = users
             }
         },
+        validDishForm() {
+            this.isValidArray = []
+            this.dishes.map((el) => {
+                this.isValidArray.push(el.isValid)
+            })
+            const even = (el) => el === false
+            console.log(this.isValidArray)
+            return !this.isValidArray.some(even)
+        },
+        popUser(index, currentUser) {
+            this.dishes[index].whoEat = this.dishes[index].whoEat.filter(
+                (el) => el !== currentUser
+            )
+        },
+        unvalidDishes() {
+            const dishCounts = {}
+
+            for (let dish of this.dishes) {
+                if (
+                    dish.dish === "" ||
+                    dish.cost === "" ||
+                    dish.whoPay === "" ||
+                    dish.whoEat.length === 0
+                ) {
+                    dishCounts[dish.dish] = 1
+                }
+                if (dish.cost <= 0) {
+                    dishCounts[dish.dish] = 1
+                }
+                if (dishCounts[dish.dish]) {
+                    dishCounts[dish.dish]++
+                } else {
+                    dishCounts[dish.dish] = 1
+                }
+            }
+
+            return Object.values(dishCounts).some((count) => count > 1)
+        },
+        unvalidNames() {
+            const nameCounts = {}
+            if (this.users.length === 0) {
+                nameCounts["disabled"] = 1
+            }
+            for (let name of this.users) {
+                if (name.name === "") {
+                    nameCounts[name.name] = 1
+                }
+                if (name.nameState === false) nameCounts[name.name] = 1
+                if (this.users.length < 2) nameCounts[name.name] = 1
+                if (nameCounts[name.name]) {
+                    nameCounts[name.name]++
+                } else {
+                    nameCounts[name.name] = 1
+                }
+            }
+            return Object.values(nameCounts).some((count) => count > 1)
+        },
+        CheckName(id) {
+            this.users.map((user) => {
+                if (user.id === id) {
+                    if (user.name.length < 3 || user.name.length > 9) {
+                        user.nameState = false
+                    } else {
+                        user.nameState = true
+                    }
+                }
+            })
+        },
+        CheckDish(id) {
+            this.dishes.map((dish) => {
+                if (dish.id === id) {
+                    if (
+                        dish.whoEat.length === 0 ||
+                        dish.whoPay === undefined ||
+                        dish.dish.length < 3 ||
+                        dish.dish.length > 15 ||
+                        dish.cost > 50000 ||
+                        dish.cost <= 0
+                    ) {
+                        dish.isValid = false
+                    } else {
+                        dish.isValid = true
+                    }
+                }
+            })
+        },
     },
 })

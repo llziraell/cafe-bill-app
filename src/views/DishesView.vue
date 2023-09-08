@@ -25,13 +25,17 @@
                >Добавить</b-button>
         </template>
         <template #body style = "margin-bottom: 20px !important; ">
-            <div class = "d-flex justify-content-center"  v-bind = "isActiveBtn = true" >
+            <div v-if = "newUser.dishes.length === 0" class = "d-flex justify-content-center"  v-bind = "isActiveBtn = true" >
                 <img class="icon" src="@/assets/Girl2.svg" alt="dots icon" style = "margin-top: 25%;">
+            </div>
+            <div v-else  v-for = "(dish, index) in newUser.dishes" :key = "dish.id" class = "w-100 d-flex mb-3 justify-content-center ">
+                <dish-form  :id = "dish.id" :dish = "dish" :index = "index" :isValid = "dish.isValid"></dish-form>
             </div>
         </template>
         <template
-            #footer>
+            #footer >
                 <b-button
+                
                 @click.prevent="$router.push( `${'results'}` )"
                 >Далее</b-button>
         </template>
