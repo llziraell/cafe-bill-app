@@ -63,7 +63,7 @@
                     </b-dropdown>
                     Кто платил?
                 </div>
-               
+                <user-check class = "overflow-x-auto" :index = "index" :dish = "dish"></user-check>  
                 <b-button @click = "newUser.deleteDishForm(id)" variant = "danger">Удалить</b-button>
             </div>
         </div> 
