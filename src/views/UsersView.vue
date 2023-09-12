@@ -1,11 +1,16 @@
 <script setup>
-import { ref } from "vue"
+import { ref, computed } from "vue"
 import FormBlock from "@/components/FormBlock.vue"
 import UserForm from "@/components/UserForm.vue"
 import { useUserStore } from "@/stores/UsersStore"
 
 const newUser = useUserStore()
 const isActiveBtn = ref(false)
+
+ const isDuplicate = computed(() => {
+         return newUser.unvalidNames()
+}) 
+
 </script>
 
 <template>
