@@ -21,31 +21,36 @@ export const useResultStore = defineStore('result', {
             dishes.map((item)=>{
                 const credit = {
                     eatCost: (item.cost)/(item.whoEat.length),
-                    whomCredit: item.whoPay
+                    whomCredit: item.whoPay,
+                    whoCredit: item.whoEat
                 }
 
                 this.whoToWhom.map((el)=>{
-                    el.cost.push(credit)
+                        el.cost.push(credit)
                 })
             })
 
+            console.log( this.whoToWhom)
+
             this.whoToWhom.map((el) => {
                 const groupedCosts = el.cost.reduce((accum, curr) => {
-                const existingItem = accum.find((item) => item.whomCredit === curr.whomCredit);
-                      
-                if (existingItem) {
-                    existingItem.eatCost += curr.eatCost;
-                } else {
-                    if (curr.whomCredit === el.name ){
-                        accum.push({ whomCredit: ' себя не бывает)))', eatCost: curr.eatCost, nameCredit: el.name })
-                    }else{
+                  
+                    if (el.name === curr.whomCredit){
+                        accum = accum.filter((el)=> el.whomCredit!==' себя не бывает)))')
+                        accum.push({ whomCredit: ' себя не бывает)))', eatCost: 0, nameCredit: el.name })
+                    }else if (curr.whoCredit.filter((el)=>el === curr.whomCredit).length === 0 ||
+                    (curr.whoCredit.filter((el)=>el === curr.whomCredit).length === 1 && curr.whoCredit.length > 1 )){
+                        console.log('тут должник ' + curr.eatCost)
+                        const existingItem = accum.find((item) => item.whomCredit === curr.whomCredit);
+                        if(typeof existingItem != "undefined"){
+                            existingItem.eatCost += curr.eatCost;
+                        }else{
                         accum.push({ whomCredit: curr.whomCredit, eatCost: curr.eatCost, nameCredit: el.name })
+                        }
                     }
-                }
                 return accum
                 }, [])
                 this.resultOperations.push(groupedCosts)
-                console.log( this.resultOperations)
             })
         }
     }
