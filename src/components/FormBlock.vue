@@ -3,7 +3,7 @@
         <div class="d-flex justify-content-between">
             <slot name="header"></slot>
         </div>
-        <hr style="color: #004a8d; border-width: 3px" />
+        <hr style="border-width: 3px" />
         <div class="d-flex justify-content-center">
             <slot name="add-button"></slot>
         </div>
@@ -19,18 +19,12 @@
 </template>
 
 <style lang="scss">
-$bgColor: #ffffff;
-$bgFormColor: #0074d9;
-
-@mixin flex($direction) {
-    display: flex;
-    flex-direction: $direction;
-}
+@import './style.scss';
 
 .form {
     margin: 5em;
     background-color: $bgColor;
-    border: 10px solid $bgFormColor;
+    border: 10px solid $mainColor;
     border-radius: 12px;
     padding: 20px;
     @include flex(column);

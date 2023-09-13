@@ -59,22 +59,11 @@ const newUser = useUserStore()
 </template>
 
 <style lang="scss">
-$bgColor: #ffffff;
-$bgFormColor: #0074d9;
-
-@mixin border_form($b-w, $b-c) {
-    border: 1px solid $b-c;
-    border-radius: $b-w;
-}
-
-@mixin flex($direction) {
-    display: flex;
-    flex-direction: $direction;
-}
+@import './style.scss';
 
 .result-block {
     width: 80%;
-    @include border_form(8px, $bgFormColor);
+    @include border_form(8px, $mainColor);
     padding: 15px;
     border-top-width: thick;
 }
@@ -82,7 +71,7 @@ $bgFormColor: #0074d9;
 .result-form {
     @include flex(row);
     padding: 15px;
-    @include border_form(8px, $bgFormColor);
+    @include border_form(8px, $mainColor);
     margin-bottom: 20px;
     border-top-width: thick;
     width: 45vw;
@@ -90,7 +79,7 @@ $bgFormColor: #0074d9;
 
 .result-cost {
     background-color: $bgColor;
-    @include border_form(15px, $bgFormColor);
+    @include border_form(15px, $mainColor);
     padding: 7px;
     margin: 0 10px 30px 10px;
     max-height: fit-content;
@@ -98,12 +87,13 @@ $bgFormColor: #0074d9;
 }
 
 .result-name {
-    background-color: $bgFormColor;
+    background-color: $mainColor;
     color: $bgColor;
-    @include border_form(12px, $bgFormColor);
+    @include border_form(12px, $mainColor);
     padding: 12px;
     margin: 0 10px 30px 10px;
     text-align: center;
     max-height: fit-content;
 }
+
 </style>

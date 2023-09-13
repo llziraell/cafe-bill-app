@@ -94,12 +94,7 @@ const isValidDish = computed(() => {
 </template>
 
 <style lang="scss">
-$mainColor: #0072d9;
-
-@mixin border_form($b-w, $b-c) {
-    border: 1px solid $b-c;
-    border-radius: $b-w;
-}
+@import './style.scss';
 
 .dish-form {
     padding: 15px;
