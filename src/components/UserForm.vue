@@ -25,8 +25,9 @@ const handleInput = (event) => {
     }
 }
 
-const isNormalName = computed(() => {
-    newUser.CheckName(props.id)
+//возвращает первую букву введенного имени)
+const isValidName = computed(() => {
+    newUser.checkName(props.id)
     if (!props.nameState) {
         return "?"
     } else {
@@ -41,8 +42,8 @@ const isNormalName = computed(() => {
         class="d-flex justify-content-between w-75 mt-1"
     >
         <b-avatar
-            :text="isNormalName"
-            :variant="isNormalName === '?' ? 'secondary' : 'primary'"
+            :text="isValidName"
+            :variant="isValidName === '?' ? 'secondary' : 'primary'"
         >
         </b-avatar>
         <b-form-input
@@ -65,16 +66,3 @@ const isNormalName = computed(() => {
         </b-button>
     </form>
 </template>
-
-<style lang="scss">
-//$bgSuccessColor: #7371FC;
-//$bgDangerColor: #F5EFFF;
-
-// $primary0: #71fccb;
-// $danger0: #541d8f;
-
-// $theme-colors: (
-//     "primary": $primary0,
-//     "danger": $danger0
-// ) !important;
-</style>

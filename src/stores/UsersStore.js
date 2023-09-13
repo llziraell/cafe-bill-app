@@ -4,7 +4,7 @@ export const useUserStore = defineStore("user", {
     state: () => ({
         users: [],
         dishes: [],
-        isValidArray: [],
+        validDishForms: [],
     }),
     actions: {
         addUserForm() {
@@ -69,20 +69,20 @@ export const useUserStore = defineStore("user", {
             }
         },
         validDishForm() {
-            this.isValidArray = []
+            this.validDishForms = []
             this.dishes.map((el) => {
-                this.isValidArray.push(el.isValid)
+                this.validDishForms.push(el.isValid)
             })
             const even = (el) => el === false
-            console.log(this.isValidArray)
-            return !this.isValidArray.some(even)
+            console.log(this.validDishForms)
+            return !this.validDishForms.some(even)
         },
         popUser(index, currentUser) {
             this.dishes[index].whoEat = this.dishes[index].whoEat.filter(
                 (el) => el !== currentUser
             )
         },
-        unvalidDishes() {
+        unvalidDishes() { //валидность всех dish-форм
             const dishCounts = {}
 
             for (let dish of this.dishes) {
@@ -106,7 +106,7 @@ export const useUserStore = defineStore("user", {
 
             return Object.values(dishCounts).some((count) => count > 1)
         },
-        unvalidNames() {
+        unvalidNames() { //валидность всех user-форм
             const nameCounts = {}
             if (this.users.length === 0) {
                 nameCounts["disabled"] = 1
@@ -125,7 +125,7 @@ export const useUserStore = defineStore("user", {
             }
             return Object.values(nameCounts).some((count) => count > 1)
         },
-        CheckName(id) {
+        checkName(id) { //валидность user-инпута
             this.users.map((user) => {
                 if (user.id === id) {
                     if (user.name.length < 3 || user.name.length > 9) {
@@ -136,7 +136,7 @@ export const useUserStore = defineStore("user", {
                 }
             })
         },
-        CheckDish(id) {
+        checkDish(id) { //валидность dish-инпута
             this.dishes.map((dish) => {
                 if (dish.id === id) {
                     if (

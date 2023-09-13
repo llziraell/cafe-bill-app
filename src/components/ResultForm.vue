@@ -9,13 +9,19 @@ const newUser = useUserStore()
 <template>
     {{ newResult.eatingOperations(newUser.users, newUser.dishes) }}
     <b-container
-        class="bv-example-row mb-3"
+        class="result-block mb-3"
         v-for="(result, index) in newResult.resultOperations"
         :key="index"
     >
         <b-row cols="2">
             <b-col sm="5">
-                <div style="display: flex; flex-direction: row; text-align: center;">
+                <div
+                    style="
+                        display: flex;
+                        flex-direction: row;
+                        text-align: center;
+                    "
+                >
                     <span class="result-name">
                         {{ result[0].nameCredit }}
                     </span>
@@ -32,7 +38,14 @@ const newUser = useUserStore()
                         <span class="result-name">{{
                             resData.whomCredit
                         }}</span>
-                        <div v-if="resData.whomCredit !== ' себя не бывает)))'" style="display: flex; flex-direction: row; text-align: center;">
+                        <div
+                            v-if="resData.whomCredit !== ' себя не бывает)))'"
+                            style="
+                                display: flex;
+                                flex-direction: row;
+                                text-align: center;
+                            "
+                        >
                             <h5>на</h5>
                             <span class="result-cost">
                                 {{ resData.eatCost.toFixed(2) }} Р</span
@@ -45,30 +58,39 @@ const newUser = useUserStore()
     </b-container>
 </template>
 
-<style>
-.bv-example-row {
+<style lang="scss">
+$bgColor: #ffffff;
+$bgFormColor: #0074d9;
+
+@mixin border_form($b-w, $b-c) {
+    border: 1px solid $b-c;
+    border-radius: $b-w;
+}
+
+@mixin flex($direction) {
+    display: flex;
+    flex-direction: $direction;
+}
+
+.result-block {
     width: 80%;
-    border: 1px solid #0072d9;
-    border-radius: 8px;
+    @include border_form(8px, $bgFormColor);
     padding: 15px;
     border-top-width: thick;
 }
 
 .result-form {
-    display: flex;
-    flex-direction: row;
+    @include flex(row);
     padding: 15px;
-    border: 1px solid #0072d9;
-    border-radius: 8px;
+    @include border_form(8px, $bgFormColor);
     margin-bottom: 20px;
     border-top-width: thick;
     width: 45vw;
 }
 
 .result-cost {
-    background-color: #fff;
-    border-radius: 15px;
-    border: 1px solid #0072d9;
+    background-color: $bgColor;
+    @include border_form(15px, $bgFormColor);
     padding: 7px;
     margin: 0 10px 30px 10px;
     max-height: fit-content;
@@ -76,9 +98,9 @@ const newUser = useUserStore()
 }
 
 .result-name {
-    background-color: #0072d9;
-    color: #fff;
-    border-radius: 12px;
+    background-color: $bgFormColor;
+    color: $bgColor;
+    @include border_form(12px, $bgFormColor);
     padding: 12px;
     margin: 0 10px 30px 10px;
     text-align: center;

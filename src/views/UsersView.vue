@@ -7,10 +7,9 @@ import { useUserStore } from "@/stores/UsersStore"
 const newUser = useUserStore()
 const isActiveBtn = ref(false)
 
- const isDuplicate = computed(() => {
-         return newUser.unvalidNames()
-}) 
-
+const isDuplicate = computed(() => {
+    return newUser.unvalidNames()
+})
 </script>
 
 <template>

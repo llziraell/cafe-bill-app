@@ -1,5 +1,5 @@
-$bgSuccessColor: #7371FC;
-$bgDangerColor: #F5EFFF;
+$bgColor: #6AAFEC;
+$mainColor: #0072D9;
 
 .app{
     left: 0;
@@ -9,9 +9,8 @@ $bgDangerColor: #F5EFFF;
     display: flex;
     justify-content: center;
     position: absolute;
-    background-color: #6AAFEC;
+    background-color: $bgColor;
     justify-content: center;
     align-items: center;
 }
-
   

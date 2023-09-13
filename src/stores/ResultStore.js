@@ -2,12 +2,13 @@ import { defineStore } from "pinia"
 
 export const useResultStore = defineStore("result", {
     state: () => ({
-        whoToWhom: [],
+        whoToWhom: [], //транзакции кто-кому должен
         users: [],
-        resultOperations: [],
+        resultOperations: [], //отредактированные выводимые транзакции
     }),
     actions: {
         eatingOperations(users, dishes) {
+            //формируем массив транзакций кто-кому должен
             this.users.push(users.map((el) => el.name))
             for (let item of users) {
                 const newWhoToWhom = {
@@ -29,10 +30,16 @@ export const useResultStore = defineStore("result", {
                 })
             })
 
+            //извлечение одинаковых исходов транзакций и суммирование сумм долга
             this.whoToWhom.map((el) => {
                 const groupedCosts = el.cost.reduce((accum, curr) => {
-                    if ((el.name !== curr.whomCredit && curr.whoCredit.find(item => item === el.name))) {
+                    //для текущего пользователя - если он не платил, но ел
+                    if (
+                        el.name !== curr.whomCredit &&
+                        curr.whoCredit.find((item) => item === el.name)
+                    ) {
                         const existingItem = accum.find(
+                            //ищем долги с одинаковым пользователем, которому должны
                             (item) => item.whomCredit === curr.whomCredit
                         )
                         if (typeof existingItem != "undefined") {
@@ -45,7 +52,9 @@ export const useResultStore = defineStore("result", {
                             })
                         }
                     } else {
+                        //во всех других случаях
                         accum = accum.filter(
+                            //исключаем повторяющийся исход
                             (el) => el.whomCredit !== " себя не бывает)))"
                         )
                         accum.push({

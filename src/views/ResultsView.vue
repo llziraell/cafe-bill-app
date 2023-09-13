@@ -1,18 +1,19 @@
 <script setup>
-import FormBlock from '@/components/FormBlock.vue'
-import ResultForm from '@/components/ResultForm.vue'
-
+import FormBlock from "@/components/FormBlock.vue"
+import ResultForm from "@/components/ResultForm.vue"
 </script>
 
 <template>
     <form-block>
-        <template #header style = "justify-content: flex-end !important;">
+        <template
+            #header
+            style="justify-content: flex-end !important"
+        >
             <h2>...час расплаты</h2>
         </template>
-        <hr>
+        <hr />
         <template #body>
-            <result-form>
-            </result-form>
+            <result-form> </result-form>
         </template>
     </form-block>
 </template>

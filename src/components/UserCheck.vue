@@ -1,6 +1,6 @@
 <script setup>
 import { useUserStore } from "@/stores/UsersStore"
-import {computed, watch } from "vue"
+import { computed, watch } from "vue"
 const newUser = useUserStore()
 
 const props = defineProps({
@@ -9,6 +9,7 @@ const props = defineProps({
     index: Number,
 })
 
+//переключение каждого чекбокса
 const toggleChecked = (index, num) => {
     const currentUser = newUser.dishes[index].users[num]
     if (newUser.dishes[index].whoEat.indexOf(currentUser) === -1) {
@@ -26,6 +27,7 @@ const toggleChecked = (index, num) => {
     }
 }
 
+//подсветка чекбоксов
 const variantChecked = (index, num) => {
     const currentUser = newUser.dishes[index].users[num]
     if (newUser.dishes[index].whoEat.indexOf(currentUser) === -1) {
@@ -35,8 +37,8 @@ const variantChecked = (index, num) => {
     }
 }
 
+//выбор всех чекбоксов
 const toggleAll = (index) => {
-    console.log(newUser.dishes[index].selectAllChecked)
     if (newUser.dishes[index].selectAllChecked) {
         for (let el of newUser.dishes[index].users) {
             newUser.dishes[index].whoEat.push(el)
@@ -51,6 +53,7 @@ const toggleAll = (index) => {
     }
 }
 
+//включение всех чекбоксов в зависимости от каждого
 const isAllChecked = computed(() => {
     return newUser.dishes.every((eatUser) => {
         eatUser.whoEat.length === eatUser.users.length
@@ -58,7 +61,6 @@ const isAllChecked = computed(() => {
 })
 
 watch(isAllChecked, (newValue) => {
-    console.log(newValue)
     newUser.dishes.forEach((dish, index) => {
         if (newValue) {
             newUser.dishes[index].selectAllChecked = true
@@ -68,48 +70,51 @@ watch(isAllChecked, (newValue) => {
 </script>
 
 <template>
-    <div style = "display: flex; flex-direction: column; align-items: center;">
-    <b-form-checkbox-group class="d-flex justify-content-center column w-60 overflow-x-auto">
-        <div class="d-flex ml-0">
-            <b-form-checkbox
-                style="visibility: hidden"
-                @change="toggleAll(index)"
-                v-model="newUser.dishes[index].selectAllChecked"
-            >
-                <b-avatar
-                    style="visibility: visible !important"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    :variant="
-                        newUser.dishes[index].selectAllChecked
-                            ? 'primary'
-                            : 'secondary'
-                    "
-                    >All
-                </b-avatar>
-            </b-form-checkbox>
-        </div>
-        <div v-for="(item, num) in newUser.dishes[index].users" class = "ml-0">
-            <b-form-checkbox
-                style="visibility: hidden"
-                @click="toggleChecked(index, num)"
-            >
-                <b-avatar
-                    style="visibility: visible !important"
-                    :variant="
-                        variantChecked(index, num) ? 'primary' : 'secondary'
-                    "
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    :title="item"
-                    v-model="dish.checked"
+    <div style="display: flex; flex-direction: column; align-items: center">
+        <b-form-checkbox-group
+            class="d-flex justify-content-center column w-60 overflow-x-auto overflow-y-none"
+        >
+            <div class="d-flex ml-0">
+                <b-form-checkbox
+                    style="visibility: hidden"
+                    @change="toggleAll(index)"
+                    v-model="newUser.dishes[index].selectAllChecked"
                 >
-                    {{ item[0].toUpperCase() }}
-                </b-avatar>
-            </b-form-checkbox>
-        </div>
-    </b-form-checkbox-group>
-    Кто eл?
+                    <b-avatar
+                        style="visibility: visible !important"
+                        :variant="
+                            newUser.dishes[index].selectAllChecked
+                                ? 'primary'
+                                : 'secondary'
+                        "
+                        >All
+                    </b-avatar>
+                </b-form-checkbox>
+            </div>
+            <div
+                v-for="(item, num) in newUser.dishes[index].users"
+                class="ml-0"
+            >
+                <b-form-checkbox
+                    style="visibility: hidden"
+                    @click="toggleChecked(index, num)"
+                >
+                    <b-avatar
+                        style="visibility: visible !important"
+                        :variant="
+                            variantChecked(index, num) ? 'primary' : 'secondary'
+                        "
+                        :badge="item"
+                        badge-top
+                        badge-offset="-2px"
+                        badge-variant="dark"
+                        v-model="dish.checked"
+                    >
+                        {{ item[0].toUpperCase() }}
+                    </b-avatar>
+                </b-form-checkbox>
+            </div>
+        </b-form-checkbox-group>
+        Кто eл?
     </div>
 </template>
-
